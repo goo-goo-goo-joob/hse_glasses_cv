@@ -3,15 +3,30 @@ import numpy as np
 from google.colab.patches import cv2_imshow
 import matplotlib.pyplot as plt
 
-
 class YUNET_CROP(object):
-    def __init__(self, face_detection_model, score_threshold = 0.9, 
-                 nms_threshold = 0.3, top_k = 100, size = (320, 320), 
-                 scale = 1, padding = (0,0), draw_images = False, thickness  =2):
+    def __init__(self, face_detection_model: str, 
+                 score_threshold: float = 0.9, 
+                 nms_threshold: float = 0.3,
+                 top_k: int = 100,
+                 size: tuple[int] = [320, 320], 
+                 scale:float = 1, 
+                 padding: tuple[int] = (0,0),
+                 draw_image: bool = False, 
+                 thickness: int=2):
+        """
+        face_detection_model - path to model
+        score_threshold - threshold for detecting images
+        top_k - top k images by threshold
+        size - resize (for crop model)
+        scale - scake for image
+        padding - paddind for cropping images, original borders from crop model
+        draw_image - draw full image with faces
+        thickness - thickness of borders for draw_image
+        """
         self.scale = scale
         self.w_padding = padding[0]
         self.h_padding = padding[1]
-        self.draw_images = draw_images
+        self.draw_images = draw_image
         self.thickness = 2
         self.detector = cv.FaceDetectorYN.create(
             face_detection_model,

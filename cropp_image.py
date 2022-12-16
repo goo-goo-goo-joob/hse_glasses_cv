@@ -45,6 +45,8 @@ class YUNET_CROP(object):
         self.detector.setInputSize((img1Width, img1Height))
         faces = self.detector.detect(img1)
         imgs = []
+        if faces[1] is None:
+            return [],[]
         for i in faces[1]:
             coords = i.astype(np.int32)
             nk = (max(int(coords[0] - self.h_padding ), 0),

@@ -47,8 +47,10 @@ class YUNET_CROP(object):
         imgs = []
         for i in faces[1]:
             coords = i.astype(np.int32)
-            nk = (int(coords[0] - self.h_padding ),int(coords[1] - self.w_padding))
-            wh = (int(coords[0]+  self.h_padding + coords[2]), int(coords[1]+self.w_padding + coords[3]))
+            nk = (max(int(coords[0] - self.h_padding ), 0),
+                    max(int(coords[1] - self.w_padding), 0))
+            wh = (min(int(coords[0]+  self.h_padding + coords[2]),img1Width  - 1),
+                 min(int(coords[1]+self.w_padding + coords[3]), img1Height- 1 ))
 
             imgs.append(img1[nk[1]:wh[1], nk[0]:wh[0]])
             if self.draw_images:

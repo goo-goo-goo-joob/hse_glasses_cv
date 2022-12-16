@@ -1,18 +1,19 @@
 import cv2 as cv
 import numpy as np
-from google.colab.patches import cv2_imshow
+import typing
 import matplotlib.pyplot as plt
 
 class YUNET_CROP(object):
-    def __init__(self, face_detection_model: str, 
+    def __init__(self, face_detection_model: str = "face_detection_yunet_2022mar.onnx", 
                  score_threshold: float = 0.9, 
                  nms_threshold: float = 0.3,
                  top_k: int = 100,
-                 size: tuple[int] = [320, 320], 
+                 size = [320, 320], 
                  scale:float = 1, 
-                 padding: tuple[int] = (0,0),
+                 padding = (0,0),
                  draw_image: bool = False, 
-                 thickness: int=2):
+                 thickness: int=2,
+                 draw_image_function: typing.Callable = None):
         """
         face_detection_model - path to model
         score_threshold - threshold for detecting images
@@ -28,6 +29,7 @@ class YUNET_CROP(object):
         self.h_padding = padding[1]
         self.draw_images = draw_image
         self.thickness = 2
+        self.draw_image_function = draw_image_function
         self.detector = cv.FaceDetectorYN.create(
             face_detection_model,
             "",
@@ -37,8 +39,8 @@ class YUNET_CROP(object):
             top_k
         )
     def crop(self, img1):
-        img1Width = int(img1.shape[1]*args["scale"])
-        img1Height = int(img1.shape[0]*args['scale'])
+        img1Width = int(img1.shape[1]*self.scale)
+        img1Height = int(img1.shape[0]*self.scale)
         img1 = cv.resize(img1, (img1Width, img1Height))
         self.detector.setInputSize((img1Width, img1Height))
         faces = self.detector.detect(img1)
@@ -53,5 +55,5 @@ class YUNET_CROP(object):
                 copy_img = img1.copy()
                 cv.rectangle(copy_img, nk, wh, (0, 255, 0), self.thickness)
         if self.draw_images:
-            cv2_imshow(img1)
+            self.draw_image_function(img1)
         return faces[1], imgs

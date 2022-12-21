@@ -12,6 +12,6 @@
 - [Гламаздин Василий](https://github.com/vsglamazdin)
 - [Индык Илья](https://github.com/IlyaInd)
 - [Пиксаев Алексей](https://github.com/piksaevalex)
-- [Подчезерцев Алексей](https://github.com/AsciiShell),
-- [Самоделкина Мария](https://github.com/goo-goo-goo-joob),
+- [Подчезерцев Алексей](https://github.com/AsciiShell)
+- [Самоделкина Мария](https://github.com/goo-goo-goo-joob)
 - [Солодянкин Андрей](https://github.com/andrsolo21)
